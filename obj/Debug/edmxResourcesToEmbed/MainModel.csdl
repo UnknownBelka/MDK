@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TelephoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Abonent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DistrictsID" Type="Int32" Nullable="false" />
+    <Property Name="Phone_categoryID" Type="Int32" Nullable="false" />
+    <Property Name="Lgotnaya_categoryID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Districts" Relationship="Self.FK_Districts" FromRole="Abonents" ToRole="Districts" />
+    <NavigationProperty Name="Lgotnaya_category" Relationship="Self.FK_Lgotnaya_category" FromRole="Abonents" ToRole="Lgotnaya_category" />
+    <NavigationProperty Name="Phone_category" Relationship="Self.FK_Phone_category" FromRole="Abonents" ToRole="Phone_category" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Abonents" Relationship="Self.FK_Districts" FromRole="Districts" ToRole="Abonents" />
+  </EntityType>
+  <EntityType Name="Lgotnaya_category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Abonents" Relationship="Self.FK_Lgotnaya_category" FromRole="Lgotnaya_category" ToRole="Abonents" />
+  </EntityType>
+  <EntityType Name="Phone_category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Abonents" Relationship="Self.FK_Phone_category" FromRole="Phone_category" ToRole="Abonents" />
+  </EntityType>
+  <Association Name="FK_Districts">
+    <End Role="Districts" Type="Self.District" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Districts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="DistrictsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lgotnaya_category">
+    <End Role="Lgotnaya_category" Type="Self.Lgotnaya_category" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lgotnaya_category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="Lgotnaya_categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Phone_category">
+    <End Role="Phone_category" Type="Self.Phone_category" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phone_category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="Phone_categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbService" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Abonents" EntityType="Self.Abonent" />
+    <EntitySet Name="Districts" EntityType="Self.District" />
+    <EntitySet Name="Lgotnaya_category" EntityType="Self.Lgotnaya_category" />
+    <EntitySet Name="Phone_category" EntityType="Self.Phone_category" />
+    <AssociationSet Name="FK_Districts" Association="Self.FK_Districts">
+      <End Role="Districts" EntitySet="Districts" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lgotnaya_category" Association="Self.FK_Lgotnaya_category">
+      <End Role="Lgotnaya_category" EntitySet="Lgotnaya_category" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Phone_category" Association="Self.FK_Phone_category">
+      <End Role="Phone_category" EntitySet="Phone_category" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="TelephoneModel.User" />
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

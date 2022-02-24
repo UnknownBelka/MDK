@@ -1,0 +1,155 @@
+﻿<Window x:Class="TelephoneSpravochnik.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TelephoneSpravochnik"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="328*"/>
+            <ColumnDefinition Width="465*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="2" Margin="0,0,0.333,-0.333">
+            <TabItem Header="Абоненты" GotFocus="TabItem_GotFocus">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                        <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChangesButton_Click"/>
+                        <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="CancelChangesButton_Click"/>
+                        <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteButton_Click"/>
+                        <Button Content="Отчёт" Width="100" Margin="3 0" Click="ReportButton_Click"/>
+                    </StackPanel>
+                    <StackPanel Width="200" DockPanel.Dock="Right">
+                        <TextBlock Text="Имя абонента" Margin="5 0 0 0"/>
+                        <TextBox x:Name="AbonentSearchName" Margin="5px"/>
+
+                        <TextBlock Text="Название Района" Margin="5 0 0 0"/>
+                        <TextBox x:Name="AbonentSearchDist" Margin="5px"/>
+
+                        <TextBlock Text="Льготная Категория" Margin="5 0 0 0"/>
+                        <TextBox x:Name="AbonentSearchLgot" Margin="5px"/>
+
+                        <TextBlock Text="Категория Телефона" Margin="5 0 0 0"/>
+                        <TextBox x:Name="AbonentSearchPhone" Margin="5px"/>
+
+                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="AbonentsTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО" Width="*" Binding="{Binding Path=FIO}"/>
+                            <DataGridTextColumn Header="Номер Телефона" Width="*" Binding="{Binding Path=Phone_Number}"/>
+                            <DataGridTextColumn Header="Дата Подключения" Width="*" Binding="{Binding Path=Date}"/>
+                            <DataGridTextColumn Header="Адрес" Width="*" Binding="{Binding Path=Adress}"/>
+                            <DataGridComboBoxColumn x:Name="colDistrict" Header="Район"
+                                DisplayMemberPath="Name" 
+                                SelectedValuePath="ID" 
+                                SelectedValueBinding="{Binding Path=DistrictsID}" 
+                                Width="100"/>
+                            <DataGridComboBoxColumn x:Name="colLgotnaya_category" Header="Льготная Категория"
+                                DisplayMemberPath="Name" 
+                                SelectedValuePath="ID" 
+                                SelectedValueBinding="{Binding Path=Lgotnaya_categoryID}" 
+                                Width="100"/>
+                            <DataGridComboBoxColumn x:Name="colPhone_category" Header="Категория Телефона"
+                                DisplayMemberPath="Name" 
+                                SelectedValuePath="ID" 
+                                SelectedValueBinding="{Binding Path=Phone_categoryID}" 
+                                Width="100"/>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <Label Content="ФИО" FontWeight="Bold" FontSize="16"/>
+                                        <Label Content="{Binding Path=FIO}" ContentStringFormat="ФИО: {0}"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <Label Content="Район" FontWeight="Bold" FontSize="16"/>
+                                        <Label Content="{Binding Path=Districts.Name}" ContentStringFormat="Район: {0}"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <Label Content="Льготная Категория" FontWeight="Bold" FontSize="16"/>
+                                        <Label Content="{Binding Path=Lgotnaya_category.Name}" ContentStringFormat="Льготная Категория: {0}"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <Label Content="Категория Телефона" FontWeight="Bold" FontSize="16"/>
+                                        <Label Content="{Binding Path=Phone_category.Name}" ContentStringFormat="Категория Телефона: {0}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Районы" GotFocus="TabItem_GotFocus">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                        <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChangesButton_Click"/>
+                        <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="CancelChangesButton_Click"/>
+                        <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteButton_Click"/>
+                        <Button Content="Отчёт" Width="100" Margin="3 0" Click="ReportButton_Click"/>
+                    </StackPanel>
+                    <StackPanel Width="200" DockPanel.Dock="Right">
+                        <TextBlock Text="Название Района" Margin="5 0 0 0"/>
+                        <TextBox x:Name="DistSearchName" Margin="5px"/>
+
+                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="DistrictTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название Района" Width="*" Binding="{Binding Path=Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Льготные Категории" GotFocus="TabItem_GotFocus">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                        <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChangesButton_Click"/>
+                        <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="CancelChangesButton_Click"/>
+                        <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteButton_Click"/>
+                        <Button Content="Отчёт" Width="100" Margin="3 0" Click="ReportButton_Click"/>
+                    </StackPanel>
+                    <StackPanel Width="200" DockPanel.Dock="Right">
+                        <TextBlock Text="Льготная Категория" Margin="5 0 0 0"/>
+                        <TextBox x:Name="LgotSearchName" Margin="5px"/>
+
+                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="Lgotnaya_categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Льготная Категория" Width="*" Binding="{Binding Path=Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Категории Телефонов" GotFocus="TabItem_GotFocus">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25" DockPanel.Dock="Top">
+                        <Button Content="Сохранить изменения" Margin="3 0" Width="150" Click="SaveChangesButton_Click"/>
+                        <Button Content="Отменить изменения" Margin="3 0" Width="150" Click="CancelChangesButton_Click"/>
+                        <Button Content="Удалить" Margin="3 0" Width="70" Click="DeleteButton_Click"/>
+                        <Button Content="Отчёт" Width="100" Margin="3 0" Click="ReportButton_Click"/>
+                    </StackPanel>
+                    <StackPanel Width="200" DockPanel.Dock="Right">
+                        <TextBlock Text="Название" Margin="5 0 0 0"/>
+                        <TextBox x:Name="PhoneSearchName" Margin="5px"/>
+
+                        <Button Content="Поиск" Margin="5" Click="SearchButton_Click"/>
+                        <Button Content="Очистить поля" Margin="5 0 5 0" Click="CancelSearchButton_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="Phone_categoryTable" CanUserResizeRows="False" AutoGenerateColumns="False" Margin="10 0 10 10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Категория Телефона" Width="*" Binding="{Binding Path=Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

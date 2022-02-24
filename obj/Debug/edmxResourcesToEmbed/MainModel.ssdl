@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TelephoneModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Abonents">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FIO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone_Number" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Adress" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DistrictsID" Type="int" Nullable="false" />
+    <Property Name="Phone_categoryID" Type="int" Nullable="false" />
+    <Property Name="Lgotnaya_categoryID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Districts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lgotnaya_category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Phone_category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Districts">
+    <End Role="Districts" Type="Self.Districts" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Districts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="DistrictsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lgotnaya_category">
+    <End Role="Lgotnaya_category" Type="Self.Lgotnaya_category" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lgotnaya_category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="Lgotnaya_categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Phone_category">
+    <End Role="Phone_category" Type="Self.Phone_category" Multiplicity="1" />
+    <End Role="Abonents" Type="Self.Abonents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Phone_category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Abonents">
+        <PropertyRef Name="Phone_categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TelephoneModelContainer">
+    <EntitySet Name="Abonents" EntityType="Self.Abonents" Schema="is-31-belovs" store:Type="Tables" />
+    <EntitySet Name="Districts" EntityType="Self.Districts" Schema="is-31-belovs" store:Type="Tables" />
+    <EntitySet Name="Lgotnaya_category" EntityType="Self.Lgotnaya_category" Schema="is-31-belovs" store:Type="Tables" />
+    <EntitySet Name="Phone_category" EntityType="Self.Phone_category" Schema="is-31-belovs" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="is-31-belovs" store:Type="Tables" />
+    <AssociationSet Name="FK_Districts" Association="Self.FK_Districts">
+      <End Role="Districts" EntitySet="Districts" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lgotnaya_category" Association="Self.FK_Lgotnaya_category">
+      <End Role="Lgotnaya_category" EntitySet="Lgotnaya_category" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Phone_category" Association="Self.FK_Phone_category">
+      <End Role="Phone_category" EntitySet="Phone_category" />
+      <End Role="Abonents" EntitySet="Abonents" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
